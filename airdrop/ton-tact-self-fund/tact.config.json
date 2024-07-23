@@ -1,0 +1,22 @@
+{
+    "projects": [
+        {
+            "name": "SampleJetton",
+            "path": "./sources/contract/contract.tact",
+            "output": "./sources/output",
+            "options": {}
+        },
+        {
+            "name": "Airdrop",
+            "path": "./sources/contract/airdrop.tact",
+            "output": "./sources/output",
+            "options": {}
+        },
+        {
+            "name": "Ido",
+            "path": "./sources/contract/ido.tact",
+            "output": "./sources/output",
+            "options": {}
+        }
+    ]
+}

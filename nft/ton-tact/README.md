@@ -2,7 +2,7 @@
 
 1.yarn install 包下不全
 
-2.删除package-lock.json 后 执行yarn install ，执行获取密钥地址不对
+2.删除package-lock.json 后 执行yarn install ，执行获取密钥地址不对，连接方式有问题
 
 
 

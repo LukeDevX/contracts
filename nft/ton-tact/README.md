@@ -1,6 +1,13 @@
 # NFT Standard in Tact
 
+1.yarn install 包下不全
+
+2.删除package-lock.json 后 执行yarn install ，执行获取密钥地址不对
+
+
+
 <a href="https://star-history.com/#Ton-Dynasty/tondynasty-contracts&Date">
+
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=howardpen9/nft-template-in-tact&type=Date&theme=dark" />
     <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=howardpen9/nft-template-in-tact&type=Date" />

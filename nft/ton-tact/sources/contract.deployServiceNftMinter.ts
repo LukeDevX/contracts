@@ -16,7 +16,10 @@ import { createNftCollectionContent, NftContent } from "./utils/utils";
         timeout: 500000
     });
 
-    const mnemonics = (process.env.MNEMONICS || "").toString();
+    // 0QAsndRoSnjB_eMnGHhuYRSUMS-Ivt5YEc3o4T7qsYYuNoWq
+    // const mnemonics = (process.env.MNEMONICS || "").toString();
+    // 0QCHbKE2GVK3HdItkAhp3lHhT0mTGRhfGojDrVhLO31p_0VJ
+    let mnemonics = "guess gloom focus wood shield thing orient asset major hint soon cotton sugar tuna absorb limit cram sword privatereview track alarm fix dash";
     let keyPair = await mnemonicToPrivateKey(mnemonics.split(" "));
     let secretKey = keyPair.secretKey;
     let workchain = 0; //we are working in basechain.
@@ -49,8 +52,8 @@ import { createNftCollectionContent, NftContent } from "./utils/utils";
                 $$type: 'RoyaltyParams',
                 numerator: 11n,//版本比例分子
                 denominator: 1000n,
-                //比例比例坟
-                destination: Address.parse("UQCeqFZ2fNvPHSpRlJaGGYQPvnVuGn-MvABofND7dpUH10Zr")// 部署人
+                //比例比例坟 
+                destination: Address.parse("0QAsndRoSnjB_eMnGHhuYRSUMS-Ivt5YEc3o4T7qsYYuNoWq")// 部署人 // UQCeqFZ2fNvPHSpRlJaGGYQPvnVuGn-MvABofND7dpUH10Zr
             },
             collectionContent: await createNftCollectionContent({
                 collectionContent: NftChannel,
@@ -135,8 +138,6 @@ import { createNftCollectionContent, NftContent } from "./utils/utils";
             }),
         ],
     });
-
-
 
     console.log("Your contactAddress deploy Done:", contactAddress);
 })();

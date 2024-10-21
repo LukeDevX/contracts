@@ -2,6 +2,7 @@ import "@stdlib/deploy";
 import "@stdlib/ownable";
 
 // https://tact-by-example.org/06-unbounded-arrays
+// arrays
 
 message NewTodo {
     task: String;

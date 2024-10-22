@@ -17,9 +17,9 @@ import { createNftCollectionContent, NftContent } from "./utils/utils";
     });
 
     // 0QAsndRoSnjB_eMnGHhuYRSUMS-Ivt5YEc3o4T7qsYYuNoWq
-    // const mnemonics = (process.env.MNEMONICS || "").toString();
+    // const mnemonics = (process.env.MNEMONICS || "").toString(); // 获取的密钥文件不知道在哪里
     // 0QCHbKE2GVK3HdItkAhp3lHhT0mTGRhfGojDrVhLO31p_0VJ
-    let mnemonics = "guess gloom focus wood shield thing orient asset major hint soon cotton sugar tuna absorb limit cram sword privatereview track alarm fix dash";
+    let mnemonics = "guess gloom focus wood shield thing orient asset major hint soon cotton sugar tuna absorb limit cram sword private review track alarm fix dash";
     let keyPair = await mnemonicToPrivateKey(mnemonics.split(" "));
     let secretKey = keyPair.secretKey;
     let workchain = 0; //we are working in basechain.

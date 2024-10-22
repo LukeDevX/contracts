@@ -2,7 +2,9 @@
 
 1.yarn install 包下不全
 
-2.删除package-lock.json 后 执行yarn install ，执行获取密钥地址不对，连接方式有问题
+2.删除package-lock.json 后 执行yarn install
+
+3. 执行 nftminter.ts process.env.MNEMONICS 获取的密钥文件不知道在哪里 路径位置？
 
 
 

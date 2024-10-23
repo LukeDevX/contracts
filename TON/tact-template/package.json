@@ -4,7 +4,8 @@
     "build": "tact --config ./tact.config.json",
     "lint": "yarn misti ./tact.config.json",
     "test": "jest",
-    "deploy": "ts-node ./sources/scripts/contract.deploy.ts",
+    "deploy": "ts-node ./sources/scripts/deploy.ts",
+    "deploy1": "ts-node ./sources/scripts/contract.deploy.ts",
     "read": "ts-node ./sources/scripts/contract.read.ts"
   },
   "dependencies": {

@@ -54,7 +54,7 @@ contract TodoParent with Deployable, Ownable {
        
 
 
-        // 错误处理
+        // 错误处理 try catch
         // 计算合约地址（当前合约和地址）：添加搜索其他地址是否添加过？？？
         // 判断成功（地址计数）mint计数，判断+1
         // 判断失败，则执行mint逻辑

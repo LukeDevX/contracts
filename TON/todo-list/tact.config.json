@@ -1,0 +1,20 @@
+{
+    "projects": [
+        {
+            "name": "contract",
+            "path": "./sources/contract/contract.tact",
+            "output": "./sources/output",
+            "mode": "full",
+            "options": {
+                "external": false,
+                "debug": false,
+                "masterchain": false,
+                "ipfsAbiGetter": false,
+                "interfacesGetter": false,
+                "experimental": {
+                    "inline": false
+                }
+            }
+        }
+    ]
+}

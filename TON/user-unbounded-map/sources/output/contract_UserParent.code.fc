@@ -37,9 +37,6 @@
     slice $toAddress = $global_contractAddress($UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_context_get_sender()));
     $self'userMap~__tact_dict_set_slice_slice(267, $toAddress, __tact_context_get_sender());
     $global_send($SendParameters$_constructor_to_body_value_mode($toAddress, $Builder$_fun_endCell($global_beginCell()), 20000000, 2));
-    if ((($self'count / 1000) == 0)) {
-        $self'userMap = null();
-    }
     $global_send($SendParameters$_constructor_to_value_mode_bounce(__tact_context_get_sender(), 0, 66, false));
     return (($self'owner, $self'count, $self'userMap), ());
 }
@@ -49,8 +46,11 @@
     $self'count = ($self'count + 1);
     slice $firstUser = __tact_dict_get_slice_slice($self'userMap, 267, __tact_context_get_sender());
     var ($init'code, $init'data) = $UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_not_null($firstUser));
-    $global_send($SendParameters$_constructor_to_body_value_mode_code_data(__tact_context_get_sender(), $Builder$_fun_endCell($global_beginCell()), 18000000, 2, $init'code, $init'data));
-    $global_send($SendParameters$_constructor_to_value_mode_bounce(__tact_not_null($firstUser), 0, 66, false));
+    if ((($self'count % 2) == 0)) {
+        $self'userMap = null();
+        $self'count = 0;
+    }
+    $global_send($SendParameters$_constructor_to_body_value_mode_code_data_bounce(__tact_context_get_sender(), $Builder$_fun_endCell($global_beginCell()), 18000000, 2, $init'code, $init'data, false));
     return (($self'owner, $self'count, $self'userMap), ());
 }
 

@@ -40,18 +40,15 @@ contract UserParent with Deployable, Ownable  {
             mode: SendIgnoreErrors
         });
 
-        // 每1000次，清空一次userMap
-        if(self.count / 1000 == 0 ){
-            self.userMap= emptyMap();
-        }
+       
 
         // 返回剩余gas
-        send(SendParameters{
-                to:  sender(), // 发消息的地址  let ctx: Context = context(); ctx.sender;
-                value: 0,
-                mode: SendRemainingValue + SendIgnoreErrors, // 返回剩余gas
-                bounce: false // messages 没有成功执行，是否退回给发送者。发送者接收到后，可以执行恢复状态等操作
-            });
+        // send(SendParameters{
+        //         to:  sender(), // 发消息的地址  let ctx: Context = context(); ctx.sender;
+        //         value: 0,
+        //         mode: SendRemainingValue + SendIgnoreErrors, // 返回剩余gas
+        //         bounce: false // messages 没有成功执行，是否退回给发送者。发送者接收到后，可以执行恢复状态等操作
+        //     });
         // self.reply(NewTodoResponse{seqno: self.numTodos}.toCell()); // this will return excess gas to sender
     }
 
@@ -62,6 +59,12 @@ contract UserParent with Deployable, Ownable  {
         let firstUser = self.userMap.get(sender());
 
         let init: StateInit = initOf UserChild(myAddress(), firstUser!!);
+
+         // 每1000次，清空一次userMap
+        if(self.count % 2 == 0 ){
+            self.userMap= emptyMap();
+            self.count = 0;
+        }
         // 不能返回任何消息，一返回就报130，参数错误
     // https://testnet.tonviewer.com/transaction/9b13a6b75ee3fba2a58cf325b5c961500874853f9d3e0d474783781efed0df05
         send(SendParameters{    
@@ -71,15 +74,16 @@ contract UserParent with Deployable, Ownable  {
             mode: SendIgnoreErrors,
             code: init.code,                // prepare the initial code when deploying the child contract
             data: init.data,
-            // bounce: false 
+            bounce: false 
         });
-            // 返回剩余gas，控制权给子合约后实际并不会执行这里----
-        send(SendParameters{
-                to: firstUser!!, // 发消息的地址  let ctx: Context = context(); ctx.sender;
-                value: 0,
-                mode: SendRemainingValue + SendIgnoreErrors, // 返回剩余gas
-                bounce: false // messages 没有成功执行，是否退回给发送者。发送者接收到后，可以执行恢复状态等操作
-        });
+        
+        // 返回剩余gas，控制权给子合约后实际并不会执行这里----
+        // send(SendParameters{
+        //         to: firstUser!!, // 发消息的地址  let ctx: Context = context(); ctx.sender;
+        //         value: 0,
+        //         mode: SendRemainingValue + SendIgnoreErrors, // 返回剩余gas
+        //         bounce: false // messages 没有成功执行，是否退回给发送者。发送者接收到后，可以执行恢复状态等操作
+        // });
     }
 
     // 转出所有余额给 合约所有者
@@ -93,7 +97,6 @@ contract UserParent with Deployable, Ownable  {
                 mode: SendRemainingBalance + SendIgnoreErrors, 
                 bounce: false 
             });
-
     }
 
 

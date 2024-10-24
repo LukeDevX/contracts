@@ -36,7 +36,7 @@ PROGRAM{
   DECLPROC $UserChild$_init_child
   DECLPROC $SendParameters$_constructor_to_body_value_mode
   DECLPROC $SendParameters$_constructor_to_value_mode_bounce
-  DECLPROC $SendParameters$_constructor_to_body_value_mode_code_data
+  DECLPROC $SendParameters$_constructor_to_body_value_mode_code_data_bounce
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372
   DECLPROC $UserParent$_receive_bounce
@@ -439,8 +439,7 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
   }>
-  $SendParameters$_constructor_to_body_value_mode_code_data PROCINLINE:<{
-    TRUE
+  $SendParameters$_constructor_to_body_value_mode_code_data_bounce PROCINLINE:<{
     s0 s6 XCHG
     s5 s5 s5 XCHG3
   }>
@@ -466,14 +465,6 @@ PROGRAM{
     $SendParameters$_constructor_to_body_value_mode INLINECALLDICT
     $global_send INLINECALLDICT
     DROP
-    OVER
-    1000 PUSHINT
-    DIV
-    0 EQINT
-    IF:<{
-      DROP
-      PUSHNULL
-    }>
     __tact_context_get_sender INLINECALLDICT
     0 PUSHINT
     66 PUSHINT
@@ -493,25 +484,29 @@ PROGRAM{
     __tact_dict_get_slice_slice INLINECALLDICT
     __tact_context_sys GETGLOB
     MYADDR
-    s2 PUSH
+    s0 s2 XCHG
     __tact_not_null INLINECALLDICT
+    s1 s2 XCHG
     $UserChild$_init_child INLINECALLDICT
+    s2 PUSH
+    1 MODPOW2#
+    0 EQINT
+    IF:<{
+      s2 POP
+      PUSHNULL
+      s3 POP
+      0 PUSHINT
+      s0 s2 XCHG
+    }>
     __tact_context_get_sender INLINECALLDICT
     NEWC
     ENDC
-    s1 s3 XCHG
-    18000000 PUSHINT
     2SWAP
+    18000000 PUSHINT
     2 PUSHINT
-    s0 s2 XCHG
-    $SendParameters$_constructor_to_body_value_mode_code_data INLINECALLDICT
-    $global_send INLINECALLDICT
-    DROP
-    __tact_not_null INLINECALLDICT
-    0 PUSHINT
-    66 PUSHINT
+    2SWAP
     FALSE
-    $SendParameters$_constructor_to_value_mode_bounce INLINECALLDICT
+    $SendParameters$_constructor_to_body_value_mode_code_data_bounce INLINECALLDICT
     $global_send INLINECALLDICT
     DROP
     SWAP

@@ -70,26 +70,9 @@ import { UserParent } from "../output/contract_UserParent";
 
 
 
-    await deployer_wallet_contract.sendTransfer({
-        seqno,
-        secretKey,
-        messages: [
-            internal({
-                to: contactAddress,
-                value: deployAmount,
-                init: {
-                    code: init.code,
-                    data: init.data,
-                },
-                body: packed_AddUser
-            })
-        ],
-    });
-
-
-    // await deployer_wallet_contract2.sendTransfer({
-    //     seqno: seqno2,
-    //     secretKey: secretKey2,
+    // await deployer_wallet_contract.sendTransfer({
+    //     seqno,
+    //     secretKey,
     //     messages: [
     //         internal({
     //             to: contactAddress,
@@ -102,6 +85,23 @@ import { UserParent } from "../output/contract_UserParent";
     //         })
     //     ],
     // });
+
+
+    await deployer_wallet_contract2.sendTransfer({
+        seqno: seqno2,
+        secretKey: secretKey2,
+        messages: [
+            internal({
+                to: contactAddress,
+                value: deployAmount,
+                init: {
+                    code: init.code,
+                    data: init.data,
+                },
+                body: packed_AddUser
+            })
+        ],
+    });
 
     console.log("Your contactAddress deploy Done:", contactAddress);
 })();

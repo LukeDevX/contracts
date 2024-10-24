@@ -26,8 +26,8 @@
     return ($bounce, $to, $value, $mode, null(), null(), null());
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode_code_data(slice $to, cell $body, int $value, int $mode, cell $code, cell $data) inline {
-    return (true, $to, $value, $mode, $body, $code, $data);
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode_code_data_bounce(slice $to, cell $body, int $value, int $mode, cell $code, cell $data, int $bounce) inline {
+    return ($bounce, $to, $value, $mode, $body, $code, $data);
 }
 
 ;;

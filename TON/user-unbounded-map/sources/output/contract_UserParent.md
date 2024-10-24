@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: UserParent
-BOC Size: 1064 bytes
+BOC Size: 1047 bytes
 
 # Types
 Total Types: 12

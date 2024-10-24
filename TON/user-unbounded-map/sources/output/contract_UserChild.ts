@@ -570,53 +570,6 @@ function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
     }
 }
 
-export type AddMsg = {
-    $$type: 'AddMsg';
-    a: bigint;
-}
-
-export function storeAddMsg(src: AddMsg) {
-    return (builder: Builder) => {
-        let b_0 = builder;
-        b_0.storeUint(1620191830, 32);
-        b_0.storeUint(src.a, 256);
-    };
-}
-
-export function loadAddMsg(slice: Slice) {
-    let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1620191830) { throw Error('Invalid prefix'); }
-    let _a = sc_0.loadUintBig(256);
-    return { $$type: 'AddMsg' as const, a: _a };
-}
-
-function loadTupleAddMsg(source: TupleReader) {
-    let _a = source.readBigNumber();
-    return { $$type: 'AddMsg' as const, a: _a };
-}
-
-function loadGetterTupleAddMsg(source: TupleReader) {
-    let _a = source.readBigNumber();
-    return { $$type: 'AddMsg' as const, a: _a };
-}
-
-function storeTupleAddMsg(source: AddMsg) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.a);
-    return builder.build();
-}
-
-function dictValueParserAddMsg(): DictionaryValue<AddMsg> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeAddMsg(src)).endCell());
-        },
-        parse: (src) => {
-            return loadAddMsg(src.loadRef().beginParse());
-        }
-    }
-}
-
 export type UserParent$Data = {
     $$type: 'UserParent$Data';
     owner: Address;
@@ -740,8 +693,8 @@ function initUserChild_init_args(src: UserChild_init_args) {
 }
 
 async function UserChild_init(parent: Address, userAddress: Address) {
-    const __code = Cell.fromBase64('te6ccgECCwEAAYIAART/APSkE/S88sgLAQIBYgIDA3jQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxa2zzy4IIIBAUCASAGBwA8AZIwf+BwIddJwh+VMCDXCx/ewAAB10nBIbCRf+BwAJbI+EMBzH8BygBZWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbJ7VQCEbw/ntnm2eNhDAgJABG+FfdqJoaQAAwBtO1E0NQB+GPSAAGOQvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBJsEuD4KNcLCoMJuvLgiQoAAiAAhvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBIC0QE=');
-    const __system = Cell.fromBase64('te6cckECDQEAAYwAAQHAAQEFoIePAgEU/wD0pBP0vPLICwMCAWIEBwN40AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8Wts88uCCCQUGADwBkjB/4HAh10nCH5UwINcLH97AAAHXScEhsJF/4HAAlsj4QwHMfwHKAFlZINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsntVAIBIAgMAhG8P57Z5tnjYQwJCwG07UTQ1AH4Y9IAAY5C+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEmwS4Pgo1wsKgwm68uCJCgCG+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIEgLRAQACIAARvhX3aiaGkAAM7oGuew==');
+    const __code = Cell.fromBase64('te6ccgECDQEAAn8AART/APSkE/S88sgLAQIBYgIDA3jQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxa2zzy4IIKBAUCASAICQHI7aLt+wGSMH/gcCHXScIflTAg1wsf3iDAACLXScEhsJJbf+DAAI65+QGC8KjG1Zde/WixLfL371Ff3N8HCSxXXknY7fHRDQ84/mBHuo6RIXCBAIJwVSBtbW3bPDB/2zHgkTDicAYAlsj4QwHMfwHKAFlZINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFsntVAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wgHAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG8P57Z5tnjYQwKCwARvhX3aiaGkAAMAbTtRNDUAfhj0gABjkL6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSbBLg+CjXCwqDCbry4IkMAAIgAIb6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEB');
+    const __system = Cell.fromBase64('te6cckECDwEAAokAAQHAAQEFoIePAgEU/wD0pBP0vPLICwMCAWIECQN40AHQ0wMBcbCjAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IhUUFMDbwT4YQL4Yts8Wts88uCCCwUIAcjtou37AZIwf+BwIddJwh+VMCDXCx/eIMAAItdJwSGwklt/4MAAjrn5AYLwqMbVl179aLEt8vfvUV/c3wcJLFdeSdjt8dENDzj+YEe6jpEhcIEAgnBVIG1tbds8MH/bMeCRMOJwBgHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wgHAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAJbI+EMBzH8BygBZWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbJ7VQCASAKDgIRvD+e2ebZ42EMCw0BtO1E0NQB+GPSAAGOQvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBJsEuD4KNcLCoMJuvLgiQwAhvpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiBIC0QEAAiAAEb4V92omhpAADLY659c=');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -787,6 +740,7 @@ const UserChild_errors: { [key: number]: { message: string } } = {
     135: { message: `Code of a contract was not found` },
     136: { message: `Invalid address` },
     137: { message: `Masterchain support is not enabled for this contract` },
+    14534: { message: `Not owner` },
 }
 
 const UserChild_types: ABIType[] = [
@@ -800,7 +754,6 @@ const UserChild_types: ABIType[] = [
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"AddMsg","header":1620191830,"fields":[{"name":"a","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
     {"name":"UserParent$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"count","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"userMap","type":{"kind":"dict","key":"address","value":"address"}}]},
     {"name":"UserChild$Data","header":null,"fields":[{"name":"parent","type":{"kind":"simple","type":"address","optional":false}},{"name":"userAddress","type":{"kind":"simple","type":"address","optional":false}}]},
 ]
@@ -815,6 +768,7 @@ export const UserChild_getterMapping: { [key: string]: string } = {
 
 const UserChild_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"empty"}},
+    {"receiver":"internal","message":{"kind":"text","text":"transferAll"}},
 ]
 
 export class UserChild implements Contract {
@@ -847,11 +801,14 @@ export class UserChild implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: null) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: null | 'transferAll') {
         
         let body: Cell | null = null;
         if (message === null) {
             body = new Cell();
+        }
+        if (message === 'transferAll') {
+            body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
         }
         if (body === null) { throw new Error('Invalid message type'); }
         

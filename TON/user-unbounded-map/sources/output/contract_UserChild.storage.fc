@@ -1,4 +1,13 @@
 ;;
+;; Type: SendParameters
+;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
+;;
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_bounce(slice $to, int $value, int $mode, int $bounce) inline {
+    return ($bounce, $to, $value, $mode, null(), null(), null());
+}
+
+;;
 ;; Type: UserChild
 ;;
 

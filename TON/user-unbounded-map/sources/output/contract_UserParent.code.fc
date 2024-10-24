@@ -37,6 +37,9 @@
     slice $toAddress = $global_contractAddress($UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_context_get_sender()));
     $self'userMap~__tact_dict_set_slice_slice(267, $toAddress, __tact_context_get_sender());
     $global_send($SendParameters$_constructor_to_body_value_mode($toAddress, $Builder$_fun_endCell($global_beginCell()), 20000000, 2));
+    if ((($self'count / 1000) == 0)) {
+        $self'userMap = null();
+    }
     $global_send($SendParameters$_constructor_to_value_mode_bounce(__tact_context_get_sender(), 0, 66, false));
     return (($self'owner, $self'count, $self'userMap), ());
 }
@@ -48,6 +51,14 @@
     var ($init'code, $init'data) = $UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_not_null($firstUser));
     $global_send($SendParameters$_constructor_to_body_value_mode_code_data(__tact_context_get_sender(), $Builder$_fun_endCell($global_beginCell()), 18000000, 2, $init'code, $init'data));
     $global_send($SendParameters$_constructor_to_value_mode_bounce(__tact_not_null($firstUser), 0, 66, false));
+    return (($self'owner, $self'count, $self'userMap), ());
+}
+
+((slice, int, cell), ()) $UserParent$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047((slice, int, cell) $self) impure inline {
+    var ($self'owner, $self'count, $self'userMap) = $self;
+    var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
+    throw_unless(14534, ( __tact_slice_eq_bits($self'owner, $ctx'sender) ));
+    $global_send($SendParameters$_constructor_to_value_mode_bounce($ctx'sender, 0, 130, false));
     return (($self'owner, $self'count, $self'userMap), ());
 }
 
@@ -116,6 +127,12 @@ _ lazy_deployment_completed() method_id {
         ;; Receive "AddUser" message
         if (text_op == 0x1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372) {
             self~$UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372();
+            return (self, true);
+        }
+        
+        ;; Receive "transferAll" message
+        if (text_op == 0xa8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047) {
+            self~$UserParent$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047();
             return (self, true);
         }
     }

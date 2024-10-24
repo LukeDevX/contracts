@@ -39,6 +39,12 @@ contract UserParent with Deployable, Ownable  {
             value: ton("0.02"), 
             mode: SendIgnoreErrors
         });
+
+        // 每1000次，清空一次userMap
+        if(self.count / 1000 == 0 ){
+            self.userMap= emptyMap();
+        }
+
         // 返回剩余gas
         send(SendParameters{
                 to:  sender(), // 发消息的地址  let ctx: Context = context(); ctx.sender;
@@ -67,7 +73,7 @@ contract UserParent with Deployable, Ownable  {
             data: init.data,
             // bounce: false 
         });
-            // 返回剩余gas
+            // 返回剩余gas，控制权给子合约后实际并不会执行这里----
         send(SendParameters{
                 to: firstUser!!, // 发消息的地址  let ctx: Context = context(); ctx.sender;
                 value: 0,
@@ -114,7 +120,7 @@ contract UserChild {
     // 转出所有余额给 parent
     receive("transferAll"){  //
         send(SendParameters{
-                to: parent, 
+                to: self.parent, 
                 value: 0,
                 mode: SendRemainingBalance + SendIgnoreErrors, 
                 bounce: false 

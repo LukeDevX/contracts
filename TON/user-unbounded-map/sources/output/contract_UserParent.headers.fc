@@ -36,6 +36,9 @@ builder __tact_store_bool(builder b, int v) inline;
 ;; __tact_dict_get_slice_slice
 slice __tact_dict_get_slice_slice(cell d, int kl, slice k) inline;
 
+;; __tact_slice_eq_bits
+int __tact_slice_eq_bits(slice a, slice b) inline;
+
 ;; __tact_dict_set_code
 cell __tact_dict_set_code(cell dict, int id, cell code) inline;
 

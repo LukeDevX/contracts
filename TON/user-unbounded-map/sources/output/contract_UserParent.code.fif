@@ -12,6 +12,7 @@ PROGRAM{
   DECLPROC __tact_store_bool
   DECLPROC __tact_dict_set_slice_slice
   DECLPROC __tact_dict_get_slice_slice
+  DECLPROC __tact_slice_eq_bits
   DECLPROC __tact_dict_set_code
   DECLPROC __tact_dict_get_code
   DECLPROC $Deploy$_load
@@ -39,6 +40,7 @@ PROGRAM{
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372
   DECLPROC $UserParent$_receive_bounce
+  DECLPROC $UserParent$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047
   DECLPROC $UserParent$_internal_binary_Deploy
   103528 DECLMETHOD %getCount
   83229 DECLMETHOD %owner
@@ -147,6 +149,9 @@ PROGRAM{
       DROP
       PUSHNULL
     }>
+  }>
+  __tact_slice_eq_bits PROCINLINE:<{
+    SDEQ
   }>
   __tact_dict_set_code PROCINLINE:<{
     s0 s2 XCHG
@@ -461,6 +466,14 @@ PROGRAM{
     $SendParameters$_constructor_to_body_value_mode INLINECALLDICT
     $global_send INLINECALLDICT
     DROP
+    OVER
+    1000 PUSHINT
+    DIV
+    0 EQINT
+    IF:<{
+      DROP
+      PUSHNULL
+    }>
     __tact_context_get_sender INLINECALLDICT
     0 PUSHINT
     66 PUSHINT
@@ -502,6 +515,21 @@ PROGRAM{
     $global_send INLINECALLDICT
     DROP
     SWAP
+  }>
+  $UserParent$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047 PROCINLINE:<{
+    __tact_context_get INLINECALLDICT
+    s2 s3 XCHG
+    3 BLKDROP
+    14534 PUSHINT
+    s4 s1 PUSH2
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    0 PUSHINT
+    130 PUSHINT
+    FALSE
+    $SendParameters$_constructor_to_value_mode_bounce INLINECALLDICT
+    $global_send INLINECALLDICT
+    DROP
   }>
   $UserParent$_internal_binary_Deploy PROCINLINE:<{
     $DeployOk$_constructor_queryId INLINECALLDICT
@@ -556,10 +584,19 @@ PROGRAM{
     0 EQINT
     IF:<{
       HASHSU
+      DUP
       7860393030676105522602928643733178114044238999847406409627630619524933489522 PUSHINT
       EQUAL
       IFJMP:<{
+        DROP
         $UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372 INLINECALLDICT
+        TRUE
+        RETALT
+      }>
+      76339868433742288287634504892932254147847595111600821092583232594796496183367 PUSHINT
+      EQUAL
+      IFJMP:<{
+        $UserParent$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047 INLINECALLDICT
         TRUE
         RETALT
       }>

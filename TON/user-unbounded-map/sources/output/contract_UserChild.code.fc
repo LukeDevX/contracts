@@ -32,6 +32,12 @@
     return (($self'parent, $self'userAddress), ());
 }
 
+((slice, slice), ()) $UserChild$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047((slice, slice) $self) impure inline {
+    var ($self'parent, $self'userAddress) = $self;
+    $global_send($SendParameters$_constructor_to_value_mode_bounce($self'parent, 0, 130, false));
+    return (($self'parent, $self'userAddress), ());
+}
+
 ;;
 ;; Get methods of a Contract UserChild
 ;;
@@ -67,6 +73,17 @@ _ lazy_deployment_completed() method_id {
     if ((op == 0) & (slice_bits(in_msg) <= 32)) {
         self~%$UserChild$_internal_empty();
         return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "transferAll" message
+        if (text_op == 0xa8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047) {
+            self~$UserChild$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047();
+            return (self, true);
+        }
     }
     
     return (self, false);

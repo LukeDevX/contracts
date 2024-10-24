@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: UserParent
-BOC Size: 976 bytes
+BOC Size: 1064 bytes
 
 # Types
-Total Types: 13
+Total Types: 12
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -44,10 +44,6 @@ Signature: `ChangeOwner{queryId:uint64,newOwner:address}`
 ## ChangeOwnerOk
 TLB: `change_owner_ok#327b2b4a queryId:uint64 newOwner:address = ChangeOwnerOk`
 Signature: `ChangeOwnerOk{queryId:uint64,newOwner:address}`
-
-## AddMsg
-TLB: `add_msg#60922a56 a:uint256 = AddMsg`
-Signature: `AddMsg{a:uint256}`
 
 ## UserParent$Data
 TLB: `null`
@@ -101,6 +97,7 @@ Total Get Methods: 2
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+14534: Not owner
 
 # Trait Inheritance Diagram
 

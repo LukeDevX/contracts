@@ -4,14 +4,19 @@ PROGRAM{
   DECLPROC __tact_verify_address
   DECLPROC __tact_load_address
   DECLPROC __tact_store_address
+  DECLPROC __tact_not_null
+  DECLPROC __tact_store_bool
   DECLPROC $UserChild$_store
   DECLPROC $UserChild$_load
   DECLPROC $UserChild$init$_load
   DECLPROC $UserChild$_contract_init
   DECLPROC $UserChild$_contract_load
   DECLPROC $UserChild$_contract_store
+  DECLPROC $global_send
   DECLPROC $UserChild$_fun_getAddress
+  DECLPROC $SendParameters$_constructor_to_value_mode_bounce
   DECLPROC %$UserChild$_internal_empty
+  DECLPROC $UserChild$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047
   67571 DECLMETHOD %getAddress
   115390 DECLMETHOD lazy_deployment_completed
   DECLPROC $UserChild$_contract_router_internal
@@ -44,6 +49,15 @@ PROGRAM{
   __tact_store_address PROCINLINE:<{
     __tact_verify_address INLINECALLDICT
     STSLICER
+  }>
+  __tact_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+  }>
+  __tact_store_bool PROCINLINE:<{
+    SWAP
+    1 STI
   }>
   $UserChild$_store PROCINLINE:<{
     -ROT
@@ -101,10 +115,127 @@ PROGRAM{
     ENDC
     c4 POP
   }>
+  $global_send PROCREF:<{
+    NEWC
+    1 PUSHINT
+    SWAP
+    2 STI
+    s0 s7 XCHG2
+    __tact_store_bool INLINECALLDICT
+    0 PUSHINT
+    SWAP
+    3 STI
+    s0 s5 XCHG2
+    __tact_store_address INLINECALLDICT
+    s0 s3 XCHG2
+    STVARUINT16
+    0 PUSHINT
+    SWAP
+    105 STI
+    s3 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+    }>ELSE<{
+      s4 PUSH
+      ISNULL
+      NOT
+    }>
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      NEWC
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      ENDC
+      ROT
+      STREF
+    }>ELSE<{
+      s3 POP
+      s3 POP
+      SWAP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      SWAP
+      __tact_not_null INLINECALLDICT
+      SWAP
+      STREF
+    }>ELSE<{
+      NIP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    ENDC
+    SWAP
+    SENDMSG
+  }>
   $UserChild$_fun_getAddress PROCREF:<{
     DUP
   }>
+  $SendParameters$_constructor_to_value_mode_bounce PROCINLINE:<{
+    3 -ROLL
+    PUSHNULL
+    PUSHNULL
+    PUSHNULL
+  }>
   %$UserChild$_internal_empty PROCINLINE:<{
+  }>
+  $UserChild$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047 PROCINLINE:<{
+    OVER
+    0 PUSHINT
+    130 PUSHINT
+    FALSE
+    $SendParameters$_constructor_to_value_mode_bounce INLINECALLDICT
+    $global_send INLINECALLDICT
+    DROP
   }>
   %getAddress PROC:<{
     $UserChild$_contract_load INLINECALLDICT
@@ -118,6 +249,8 @@ PROGRAM{
     SWAP
   }>
   $UserChild$_contract_router_internal PROCREF:<{
+    c2 SAVE
+    SAMEALTSAVE
     SWAP
     IFJMP:<{
       DROP
@@ -132,14 +265,29 @@ PROGRAM{
       DUP
       32 PLDU
     }>
+    DUP
     0 EQINT
-    SWAP
+    s2 PUSH
     SBITS
     33 LESSINT
     AND
     IFJMP:<{
+      2DROP
       %$UserChild$_internal_empty INLINECALLDICT
       TRUE
+    }>
+    0 EQINT
+    IF:<{
+      HASHSU
+      76339868433742288287634504892932254147847595111600821092583232594796496183367 PUSHINT
+      EQUAL
+      IFJMP:<{
+        $UserChild$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047 INLINECALLDICT
+        TRUE
+        RETALT
+      }>
+    }>ELSE<{
+      DROP
     }>
     FALSE
   }>

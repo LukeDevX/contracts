@@ -79,6 +79,10 @@ slice __tact_dict_get_slice_slice(cell d, int kl, slice k) inline {
     }
 }
 
+int __tact_slice_eq_bits(slice a, slice b) inline {
+    return equal_slices_bits(a, b);
+}
+
 cell __tact_dict_set_code(cell dict, int id, cell code) inline {
     return udict_set_ref(dict, 16, id, code);
 }

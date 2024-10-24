@@ -12,6 +12,12 @@ slice __tact_verify_address(slice address) impure inline;
 ;; __tact_store_address
 builder __tact_store_address(builder b, slice address) inline;
 
+;; __tact_not_null
+forall X -> X __tact_not_null(X x) impure inline;
+
+;; __tact_store_bool
+builder __tact_store_bool(builder b, int v) inline;
+
 ;; $UserChild$_store
 builder $UserChild$_store(builder build_0, (slice, slice) v) inline;
 
@@ -30,5 +36,11 @@ builder $UserChild$_store(builder build_0, (slice, slice) v) inline;
 ;; $UserChild$_contract_store
 () $UserChild$_contract_store((slice, slice) v) impure inline;
 
+;; $global_send
+int $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
+
 ;; $UserChild$_fun_getAddress
 ((slice, slice), slice) $UserChild$_fun_getAddress((slice, slice) $self) impure inline_ref;
+
+;; $SendParameters$_constructor_to_value_mode_bounce
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_bounce(slice $to, int $value, int $mode, int $bounce) inline;

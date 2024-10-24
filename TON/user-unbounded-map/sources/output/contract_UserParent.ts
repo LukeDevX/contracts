@@ -570,53 +570,6 @@ function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
     }
 }
 
-export type AddMsg = {
-    $$type: 'AddMsg';
-    a: bigint;
-}
-
-export function storeAddMsg(src: AddMsg) {
-    return (builder: Builder) => {
-        let b_0 = builder;
-        b_0.storeUint(1620191830, 32);
-        b_0.storeUint(src.a, 256);
-    };
-}
-
-export function loadAddMsg(slice: Slice) {
-    let sc_0 = slice;
-    if (sc_0.loadUint(32) !== 1620191830) { throw Error('Invalid prefix'); }
-    let _a = sc_0.loadUintBig(256);
-    return { $$type: 'AddMsg' as const, a: _a };
-}
-
-function loadTupleAddMsg(source: TupleReader) {
-    let _a = source.readBigNumber();
-    return { $$type: 'AddMsg' as const, a: _a };
-}
-
-function loadGetterTupleAddMsg(source: TupleReader) {
-    let _a = source.readBigNumber();
-    return { $$type: 'AddMsg' as const, a: _a };
-}
-
-function storeTupleAddMsg(source: AddMsg) {
-    let builder = new TupleBuilder();
-    builder.writeNumber(source.a);
-    return builder.build();
-}
-
-function dictValueParserAddMsg(): DictionaryValue<AddMsg> {
-    return {
-        serialize: (src, builder) => {
-            builder.storeRef(beginCell().store(storeAddMsg(src)).endCell());
-        },
-        parse: (src) => {
-            return loadAddMsg(src.loadRef().beginParse());
-        }
-    }
-}
-
 export type UserParent$Data = {
     $$type: 'UserParent$Data';
     owner: Address;
@@ -738,8 +691,8 @@ function initUserParent_init_args(src: UserParent_init_args) {
 }
 
 async function UserParent_init(owner: Address) {
-    const __code = Cell.fromBase64('te6ccgECFAEAA8QAART/APSkE/S88sgLAQIBYgIDAt7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBaINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEsv/9ADJ7VQRBAIBIAwNBM7tou37AY/KgCDXITABpIEBC/hCI1lZ9ApvoZIwbd/4Q/goIiBu8tCA2zz4QsjJE4IJEqiAWnICfwZFVds8MCBu8tCAcIBCcFUgbW1t2zwwAX/gcCHXScIflTAg1wsf3iCCEJRqmLa6CAoKBQLAjqgw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4MAAjq35AYLwEWDTJcMVSKht+zhBBaA+2vviBD/T1aXMC75izjmiE3K6joXbPH/bMeCRMOJwBgcBPG1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8MAoD9vhD+Cj4Qts8cFnIcAHLAXMBywFwAcsAEszMyfkAyHIBywFwAcsAEsoHy//J0CDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IiBAQv4QiIQNAEgbpUwWfRZMJjIAc8WQTP0QeLIyRKCCTEtAHJ/BANtbds8MPhCcIBCcAgKCQDWAtD0BDBtAYFDxwGAEPQPb6Hy4IcBgUPHIgKAEPQXyAHI9ADJAcxwAcoAQANZINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFskBEFUgbW1t2zwwCgHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wgLAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAhG+KO7Z5tnjYYwRDgIBIA8QAAIiAhG5Ro2zzbPGwxgREgARuCvu1E0NIAAYAcbtRNDUAfhj0gABjij6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdP/9ARVIGwT4Pgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHR2zwTAAIhAARwbQ==');
-    const __system = Cell.fromBase64('te6cckECIwEABVsAAQHAAQIBIAIOAQW+HjwDART/APSkE/S88sgLBAIBYgUIA3jQAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxa2zzy4IIKBgcAPAGSMH/gcCHXScIflTAg1wsf3sAAAddJwSGwkX/gcACWyPhDAcx/AcoAWVkg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8Wye1UAgEgCQ0CEbw/ntnm2eNhDAoMAbTtRNDUAfhj0gABjkL6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSbBLg+CjXCwqDCbry4IkLAIb6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAfpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgSAtEBAAIgABG+FfdqJoaQAAwBBbxKdA8BFP8A9KQT9LzyyAsQAgFiERoC3tAB0NMDAXGwowH6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIVFBTA28E+GEC+GLbPFUS2zzy4ILI+EMBzH8BygBVIFog10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYSy//0AMntVB8SBM7tou37AY/KgCDXITABpIEBC/hCI1lZ9ApvoZIwbd/4Q/goIiBu8tCA2zz4QsjJE4IJEqiAWnICfwZFVds8MCBu8tCAcIBCcFUgbW1t2zwwAX/gcCHXScIflTAg1wsf3iCCEJRqmLa6FhgYEwLAjqgw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4MAAjq35AYLwEWDTJcMVSKht+zhBBaA+2vviBD/T1aXMC75izjmiE3K6joXbPH/bMeCRMOJwFBUBPG1tIm6zmVsgbvLQgG8iAZEy4hAkcAMEgEJQI9s8MBgD9vhD+Cj4Qts8cFnIcAHLAXMBywFwAcsAEszMyfkAyHIBywFwAcsAEsoHy//J0CDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IiBAQv4QiIQNAEgbpUwWfRZMJjIAc8WQTP0QeLIyRKCCTEtAHJ/BANtbds8MPhCcIBCcBYYFwDWAtD0BDBtAYFDxwGAEPQPb6Hy4IcBgUPHIgKAEPQXyAHI9ADJAcxwAcoAQANZINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFskBEFUgbW1t2zwwGAHKyHEBygFQBwHKAHABygJQBSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFlAD+gJwAcpoI26zkX+TJG6z4pczMwFwAcoA4w0hbrOcfwHKAAEgbvLQgAHMlTFwAcoA4skB+wgZAJh/AcoAyHABygBwAcoAJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4iRus51/AcoABCBu8tCAUATMljQDcAHKAOJwAcoAAn8BygACyVjMAgEgGx0CEb4o7tnm2eNhjB8cAAIiAgEgHiICEblGjbPNs8bDGB8hAcbtRNDUAfhj0gABjij6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdP/9ARVIGwT4Pgo1wsKgwm68uCJ+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHR2zwgAARwbQACIQARuCvu1E0NIAAYvhEKbQ==');
+    const __code = Cell.fromBase64('te6ccgECFQEABBwAART/APSkE/S88sgLAQIBYgIDAt7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBaINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEsv/9ADJ7VQSBAIBIA0OBM7tou37AY/KgCDXITABpIEBC/hCI1lZ9ApvoZIwbd/4Q/goIiBu8tCA2zz4QsjJE4IJEqiAWnICfwZFVds8MCBu8tCAcIBCcFUgbW1t2zwwAX/gcCHXScIflTAg1wsf3iCCEJRqmLa6CQsLBQJkjqgw0x8BghCUapi2uvLggdM/ATHIAYIQr/kPV1jLH8s/yfhCAXBt2zx/4MAAkTDjDXAGBwE8bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwwCwLs+QEggvARYNMlwxVIqG37OEEFoD7a++IEP9PVpcwLvmLOOaITcrqOhjDbPH/bMeCC8KjG1Zde/WixLfL371Ff3N8HCSxXXknY7fHRDQ84/mBHuo6h+EFvJBAjXwOBOMZTQccF8vRwgQCCcFUgbW1t2zwwf9sx4AgLA/b4Q/go+ELbPHBZyHABywFzAcsBcAHLABLMzMn5AMhyAcsBcAHLABLKB8v/ydAg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIgQEL+EIiEDQBIG6VMFn0WTCYyAHPFkEz9EHiyMkSggkxLQByfwQDbW3bPDAhgQPoqQQJCwoA1gLQ9AQwbQGBQ8cBgBD0D2+h8uCHAYFDxyICgBD0F8gByPQAyQHMcAHKAEADWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbJASjAAJIwbd74QnCAQnBVIG1tbds8MAsByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsIDACYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzAIRviju2ebZ42GMEg8CASAQEQACIgIRuUaNs82zxsMYEhMAEbgr7tRNDSAAGAHG7UTQ1AH4Y9IAAY4o+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHT//QEVSBsE+D4KNcLCoMJuvLgifpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0ds8FAACIQAEcG0=');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -785,6 +738,7 @@ const UserParent_errors: { [key: number]: { message: string } } = {
     135: { message: `Code of a contract was not found` },
     136: { message: `Invalid address` },
     137: { message: `Masterchain support is not enabled for this contract` },
+    14534: { message: `Not owner` },
 }
 
 const UserParent_types: ABIType[] = [
@@ -798,7 +752,6 @@ const UserParent_types: ABIType[] = [
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
-    {"name":"AddMsg","header":1620191830,"fields":[{"name":"a","type":{"kind":"simple","type":"uint","optional":false,"format":256}}]},
     {"name":"UserParent$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"count","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"userMap","type":{"kind":"dict","key":"address","value":"address"}}]},
     {"name":"UserChild$Data","header":null,"fields":[{"name":"parent","type":{"kind":"simple","type":"address","optional":false}},{"name":"userAddress","type":{"kind":"simple","type":"address","optional":false}}]},
 ]
@@ -815,6 +768,7 @@ export const UserParent_getterMapping: { [key: string]: string } = {
 
 const UserParent_receivers: ABIReceiver[] = [
     {"receiver":"internal","message":{"kind":"text","text":"AddUser"}},
+    {"receiver":"internal","message":{"kind":"text","text":"transferAll"}},
     {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
 ]
 
@@ -848,10 +802,13 @@ export class UserParent implements Contract {
         this.init = init;
     }
     
-    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: 'AddUser' | Deploy) {
+    async send(provider: ContractProvider, via: Sender, args: { value: bigint, bounce?: boolean| null | undefined }, message: 'AddUser' | 'transferAll' | Deploy) {
         
         let body: Cell | null = null;
         if (message === 'AddUser') {
+            body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
+        }
+        if (message === 'transferAll') {
             body = beginCell().storeUint(0, 32).storeStringTail(message).endCell();
         }
         if (message && typeof message === 'object' && !(message instanceof Slice) && message.$$type === 'Deploy') {

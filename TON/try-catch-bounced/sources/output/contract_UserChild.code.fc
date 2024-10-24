@@ -1,0 +1,85 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "contract_UserChild.headers.fc";
+#include "contract_UserChild.stdlib.fc";
+#include "contract_UserChild.storage.fc";
+
+;;
+;; Contract UserChild functions
+;;
+
+(slice, slice) $UserChild$_contract_init(slice $parent, slice $userAddress) impure inline_ref {
+    var (($self'parent, $self'userAddress)) = (null(), null());
+    $self'parent = $parent;
+    $self'userAddress = $userAddress;
+    return ($self'parent, $self'userAddress);
+}
+
+((slice, slice), slice) $UserChild$_fun_getAddress((slice, slice) $self) impure inline_ref {
+    var (($self'parent, $self'userAddress)) = $self;
+    var $fresh$ret_3 = $self'userAddress;
+    return (($self'parent, $self'userAddress), $fresh$ret_3);
+}
+
+;;
+;; Receivers of a Contract UserChild
+;;
+
+;;
+;; Get methods of a Contract UserChild
+;;
+
+_ %getAddress() method_id(67571) {
+    var self = $UserChild$_contract_load();
+    var res = self~$UserChild$_fun_getAddress();
+    return res;
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract UserChild
+;;
+
+((slice, slice), int) $UserChild$_contract_router_internal((slice, slice) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $UserChild$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$UserChild$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $UserChild$_contract_store(self);
+}

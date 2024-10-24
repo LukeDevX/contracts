@@ -1,0 +1,147 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "contract_UserParent.headers.fc";
+#include "contract_UserParent.stdlib.fc";
+#include "contract_UserParent.storage.fc";
+
+;;
+;; Contract UserParent functions
+;;
+
+(slice, int, cell) $UserParent$_contract_init(slice $owner) impure inline_ref {
+    var (($self'owner, $self'count, $self'userMap)) = (null(), 0, null());
+    $self'owner = $owner;
+    return ($self'owner, $self'count, $self'userMap);
+}
+
+((slice, int, cell), int) $UserParent$_fun_getCount((slice, int, cell) $self) impure inline_ref {
+    var (($self'owner, $self'count, $self'userMap)) = $self;
+    var $fresh$ret_0 = $self'count;
+    return (($self'owner, $self'count, $self'userMap), $fresh$ret_0);
+}
+
+((slice, int, cell), slice) $UserParent$_fun_owner((slice, int, cell) $self) impure inline_ref {
+    var (($self'owner, $self'count, $self'userMap)) = $self;
+    var $fresh$ret_1 = $self'owner;
+    return (($self'owner, $self'count, $self'userMap), $fresh$ret_1);
+}
+
+;;
+;; Receivers of a Contract UserParent
+;;
+
+((slice, int, cell), ()) $UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372((slice, int, cell) $self) impure inline {
+    var ($self'owner, $self'count, $self'userMap) = $self;
+    slice $toAddress = $global_contractAddress($UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_context_get_sender()));
+    $self'userMap~__tact_dict_set_slice_slice(267, $toAddress, __tact_context_get_sender());
+    $global_send($SendParameters$_constructor_to_body_value_mode($toAddress, $Builder$_fun_endCell($global_beginCell()), 20000000, 2));
+    $global_send($SendParameters$_constructor_to_value_mode_bounce(__tact_context_get_sender(), 0, 66, false));
+    return (($self'owner, $self'count, $self'userMap), ());
+}
+
+((slice, int, cell), ()) $UserParent$_receive_bounce((slice, int, cell) $self, slice $rawMsg) impure inline {
+    var ($self'owner, $self'count, $self'userMap) = $self;
+    $self'count = ($self'count + 1);
+    slice $firstUser = __tact_dict_get_slice_slice($self'userMap, 267, __tact_context_get_sender());
+    var ($init'code, $init'data) = $UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_not_null($firstUser));
+    $global_send($SendParameters$_constructor_to_body_value_mode_code_data(__tact_context_get_sender(), $Builder$_fun_endCell($global_beginCell()), 18000000, 2, $init'code, $init'data));
+    $global_send($SendParameters$_constructor_to_value_mode_bounce(__tact_not_null($firstUser), 0, 66, false));
+    return (($self'owner, $self'count, $self'userMap), ());
+}
+
+(((slice, int, cell)), ()) $UserParent$_internal_binary_Deploy((slice, int, cell) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'count, $self'userMap) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'owner, $self'count, $self'userMap)~$UserParent$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'count, $self'userMap), ());
+}
+
+;;
+;; Get methods of a Contract UserParent
+;;
+
+_ %getCount() method_id(103528) {
+    var self = $UserParent$_contract_load();
+    var res = self~$UserParent$_fun_getCount();
+    return res;
+}
+
+_ %owner() method_id(83229) {
+    var self = $UserParent$_contract_load();
+    var res = self~$UserParent$_fun_owner();
+    return res;
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract UserParent
+;;
+
+((slice, int, cell), int) $UserParent$_contract_router_internal((slice, int, cell) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        
+        ;; Skip 0xFFFFFFFF
+        in_msg~skip_bits(32);
+        
+        ;; Fallback bounce receiver
+        self~$UserParent$_receive_bounce(in_msg);
+        
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$UserParent$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "AddUser" message
+        if (text_op == 0x1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372) {
+            self~$UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372();
+            return (self, true);
+        }
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $UserParent$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$UserParent$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $UserParent$_contract_store(self);
+}

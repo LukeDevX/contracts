@@ -1,0 +1,145 @@
+#pragma version =0.4.4;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "contract_SampleTactContract.headers.fc";
+#include "contract_SampleTactContract.stdlib.fc";
+#include "contract_SampleTactContract.storage.fc";
+
+;;
+;; Contract SampleTactContract functions
+;;
+
+(slice, int) $SampleTactContract$_contract_init(slice $owner) impure inline_ref {
+    var (($self'owner, $self'counter)) = (null(), null());
+    $self'owner = $owner;
+    $self'counter = 0;
+    return ($self'owner, $self'counter);
+}
+
+((slice, int), int) $SampleTactContract$_fun_counter((slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'counter)) = $self;
+    var $fresh$ret_0 = $self'counter;
+    return (($self'owner, $self'counter), $fresh$ret_0);
+}
+
+;;
+;; Receivers of a Contract SampleTactContract
+;;
+
+((slice, int), ()) $SampleTactContract$_internal_text_880f1a8631b5cecc6ea26bb71314f0cad50cc840bfc78db5f5a0748869355991((slice, int) $self) impure inline {
+    var ($self'owner, $self'counter) = $self;
+    try {
+        $global_send($SendParameters$_constructor_to_body_value_mode($global_contractAddress($UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_context_get_sender())), $Builder$_fun_endCell($global_beginCell()), 0, 66));
+    } catch (_, $err) {
+        $self'counter = $self'counter + 1;
+    }
+    return (($self'owner, $self'counter), ());
+}
+
+((slice, int), ()) $SampleTactContract$_internal_text_f904547a22896c9674f64475af2b01658bc0ab6f60aab4f243b854a789e031b1((slice, int) $self) impure inline {
+    var ($self'owner, $self'counter) = $self;
+    $global_send($SendParameters$_constructor_to_body_value_mode($global_contractAddress($UserChild$_init_child(__tact_context_sys, $global_myAddress(), __tact_context_get_sender())), $Builder$_fun_endCell($global_beginCell()), 0, 66));
+    return (($self'owner, $self'counter), ());
+}
+
+((slice, int), ()) $SampleTactContract$_receive_bounce((slice, int) $self, slice $rawMsg) impure inline {
+    var ($self'owner, $self'counter) = $self;
+    $self'counter = $self'counter + 10;
+    return (($self'owner, $self'counter), ());
+}
+
+(((slice, int)), ()) $SampleTactContract$_internal_binary_Deploy((slice, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'counter) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'owner, $self'counter)~$SampleTactContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'counter), ());
+}
+
+;;
+;; Get methods of a Contract SampleTactContract
+;;
+
+_ %counter() method_id(104984) {
+    var self = $SampleTactContract$_contract_load();
+    var res = self~$SampleTactContract$_fun_counter();
+    return res;
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract SampleTactContract
+;;
+
+((slice, int), int) $SampleTactContract$_contract_router_internal((slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        
+        ;; Skip 0xFFFFFFFF
+        in_msg~skip_bits(32);
+        
+        ;; Fallback bounce receiver
+        self~$SampleTactContract$_receive_bounce(in_msg);
+        
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$SampleTactContract$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "trycatch" message
+        if (text_op == 0x880f1a8631b5cecc6ea26bb71314f0cad50cc840bfc78db5f5a0748869355991) {
+            self~$SampleTactContract$_internal_text_880f1a8631b5cecc6ea26bb71314f0cad50cc840bfc78db5f5a0748869355991();
+            return (self, true);
+        }
+        
+        ;; Receive "bouncederror" message
+        if (text_op == 0xf904547a22896c9674f64475af2b01658bc0ab6f60aab4f243b854a789e031b1) {
+            self~$SampleTactContract$_internal_text_f904547a22896c9674f64475af2b01658bc0ab6f60aab4f243b854a789e031b1();
+            return (self, true);
+        }
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $SampleTactContract$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$SampleTactContract$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $SampleTactContract$_contract_store(self);
+}

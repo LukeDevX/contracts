@@ -1,0 +1,170 @@
+ode_modules\@tact-lang\compiler\stdlib\stdlib.fc` `D:\clouds\OneDrive\workspace\contracts\TON\user-unbounded-map
+ode_modules\@tact-lang\compiler\stdlib\stdlib_ex.fc` `D:/clouds/OneDrive/workspace/contracts/TON/user-unbounded-map/sources/output/contract_UserChild.code.fc` incl:`D:/clouds/OneDrive/workspace/contracts/TON/user-unbounded-map/sources/output/contract_UserChild.headers.fc` incl:`D:/clouds/OneDrive/workspace/contracts/TON/user-unbounded-map/sources/output/contract_UserChild.stdlib.fc` incl:`D:/clouds/OneDrive/workspace/contracts/TON/user-unbounded-map/sources/output/contract_UserChild.storage.fc` 
+PROGRAM{
+  DECLPROC __tact_verify_address
+  DECLPROC __tact_load_address
+  DECLPROC __tact_store_address
+  DECLPROC $UserChild$_store
+  DECLPROC $UserChild$_load
+  DECLPROC $UserChild$init$_load
+  DECLPROC $UserChild$_contract_init
+  DECLPROC $UserChild$_contract_load
+  DECLPROC $UserChild$_contract_store
+  DECLPROC $UserChild$_fun_getAddress
+  DECLPROC %$UserChild$_internal_empty
+  67571 DECLMETHOD %getAddress
+  115390 DECLMETHOD lazy_deployment_completed
+  DECLPROC $UserChild$_contract_router_internal
+  DECLPROC recv_internal
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sender
+  DECLGLOBVAR __tact_context_sys
+  DECLGLOBVAR __tact_randomized
+  __tact_verify_address PROCINLINE:<{
+    DUP
+    SBITS
+    267 PUSHINT
+    EQUAL
+    136 THROWIFNOT
+    DUP
+    11 PLDU
+    DUP
+    1279 PUSHINT
+    EQUAL
+    137 THROWIF
+    10 PUSHPOW2
+    EQUAL
+    136 THROWIFNOT
+  }>
+  __tact_load_address PROCINLINE:<{
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+  }>
+  __tact_store_address PROCINLINE:<{
+    __tact_verify_address INLINECALLDICT
+    STSLICER
+  }>
+  $UserChild$_store PROCINLINE:<{
+    -ROT
+    __tact_store_address INLINECALLDICT
+    SWAP
+    __tact_store_address INLINECALLDICT
+  }>
+  $UserChild$_load PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address INLINECALLDICT
+    s1 s2 XCHG
+  }>
+  $UserChild$init$_load PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address INLINECALLDICT
+    s1 s2 XCHG
+  }>
+  $UserChild$_contract_init PROCREF:<{
+  }>
+  $UserChild$_contract_load PROCREF:<{
+    c4 PUSH
+    CTOS
+    LDREF
+    SWAP
+    __tact_context_sys SETGLOB
+    1 LDI
+    SWAP
+    IFJMP:<{
+      $UserChild$_load INLINECALLDICT
+      1 2 BLKDROP2
+    }>
+    MYADDR
+    11 PLDU
+    10 PUSHPOW2
+    EQUAL
+    137 THROWIFNOT
+    $UserChild$init$_load INLINECALLDICT
+    s0 s2 XCHG
+    ENDS
+    SWAP
+    $UserChild$_contract_init INLINECALLDICT
+  }>
+  $UserChild$_contract_store PROCINLINE:<{
+    NEWC
+    __tact_context_sys GETGLOB
+    SWAP
+    STREF
+    TRUE
+    SWAP
+    1 STI
+    -ROT
+    $UserChild$_store INLINECALLDICT
+    ENDC
+    c4 POP
+  }>
+  $UserChild$_fun_getAddress PROCREF:<{
+    DUP
+  }>
+  %$UserChild$_internal_empty PROCINLINE:<{
+  }>
+  %getAddress PROC:<{
+    $UserChild$_contract_load INLINECALLDICT
+    $UserChild$_fun_getAddress INLINECALLDICT
+    2 1 BLKDROP2
+  }>
+  lazy_deployment_completed PROC:<{
+    c4 PUSH
+    CTOS
+    1 LDI
+    SWAP
+  }>
+  $UserChild$_contract_router_internal PROCREF:<{
+    SWAP
+    IFJMP:<{
+      DROP
+      TRUE
+    }>
+    0 PUSHINT
+    OVER
+    SBITS
+    31 GTINT
+    IF:<{
+      DROP
+      DUP
+      32 PLDU
+    }>
+    0 EQINT
+    SWAP
+    SBITS
+    33 LESSINT
+    AND
+    IFJMP:<{
+      %$UserChild$_internal_empty INLINECALLDICT
+      TRUE
+    }>
+    FALSE
+  }>
+  recv_internal PROC:<{
+    SWAP
+    CTOS
+    4 LDU
+    SWAP
+    1 PUSHINT
+    AND
+    NEGATE
+    SWAP
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+    s0 s4 s2 PUXCPU
+    s0 s3 XCHG
+    4 TUPLE
+    __tact_context SETGLOB
+    s0 s2 XCHG
+    __tact_context_sender SETGLOB
+    $UserChild$_contract_load INLINECALLDICT
+    2SWAP
+    $UserChild$_contract_router_internal INLINECALLDICT
+    130 THROWIFNOT
+    $UserChild$_contract_store INLINECALLDICT
+  }>
+}END>c

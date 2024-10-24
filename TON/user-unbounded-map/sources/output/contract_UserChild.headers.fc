@@ -1,0 +1,34 @@
+;;
+;; Header files for UserChild
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_verify_address
+slice __tact_verify_address(slice address) impure inline;
+
+;; __tact_load_address
+(slice, slice) __tact_load_address(slice cs) inline;
+
+;; __tact_store_address
+builder __tact_store_address(builder b, slice address) inline;
+
+;; $UserChild$_store
+builder $UserChild$_store(builder build_0, (slice, slice) v) inline;
+
+;; $UserChild$_load
+(slice, ((slice, slice))) $UserChild$_load(slice sc_0) inline;
+
+;; $UserChild$init$_load
+(slice, ((slice, slice))) $UserChild$init$_load(slice sc_0) inline;
+
+;; $UserChild$_contract_init
+(slice, slice) $UserChild$_contract_init(slice $parent, slice $userAddress) impure inline_ref;
+
+;; $UserChild$_contract_load
+(slice, slice) $UserChild$_contract_load() impure inline_ref;
+
+;; $UserChild$_contract_store
+() $UserChild$_contract_store((slice, slice) v) impure inline;
+
+;; $UserChild$_fun_getAddress
+((slice, slice), slice) $UserChild$_fun_getAddress((slice, slice) $self) impure inline_ref;

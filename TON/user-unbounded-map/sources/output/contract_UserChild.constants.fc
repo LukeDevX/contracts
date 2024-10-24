@@ -1,0 +1,2 @@
+;; Comment "add success"
+cell __gen_cell_comment_af0407eaf66930284cef07afba6880485e23b6d7f5ce430281fdfd967230244a() asm """B{b5ee9c7241010101001100001e0000000061646420737563636573736ff2fb5c} B>boc PUSHREF""";

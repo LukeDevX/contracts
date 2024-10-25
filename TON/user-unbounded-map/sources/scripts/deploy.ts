@@ -18,8 +18,7 @@ import { UserParent } from "../output/contract_UserParent";
     // 0QBZhX-35v_tGP_Zq4iPHjFtBa-7v2Nnwp4D9W3susdYLpl6
     // let mnemonics = "glove input item control potato elevator veteran sample crew filter trip satisfy hungry leaf salt truth tobacco leader exchange step forward mixed dutch elephant"; // 🔴 Change to your own, by creating .env file!
 
-
-    // 0QCHbKE2GVK3HdItkAhp3lHhT0mTGRhfGojDrVhLO31p_0VJ
+    // 0QAF-zWF690Fa7Syao7p0gs8e6NR9juYVw9WfDwu8c30lM3p
     let mnemonics = "gym deal bike dream vibrant wrist round toe spend say census come mass already error night reveal model cross evoke vessel become fuel chimney";
     let keyPair = await mnemonicToPrivateKey(mnemonics.split(" "));
     let secretKey = keyPair.secretKey;

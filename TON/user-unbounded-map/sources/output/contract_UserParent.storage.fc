@@ -22,12 +22,12 @@
     return (true, $to, $value, $mode, $body, null(), null());
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_bounce(slice $to, int $value, int $mode, int $bounce) inline {
-    return ($bounce, $to, $value, $mode, null(), null(), null());
-}
-
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode_code_data_bounce(slice $to, cell $body, int $value, int $mode, cell $code, cell $data, int $bounce) inline {
     return ($bounce, $to, $value, $mode, $body, $code, $data);
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_bounce(slice $to, int $value, int $mode, int $bounce) inline {
+    return ($bounce, $to, $value, $mode, null(), null(), null());
 }
 
 ;;
@@ -61,6 +61,32 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ((int)) $DeployOk$_constructor_queryId(int $queryId) inline {
     return ($queryId);
+}
+
+;;
+;; Type: OnlyUser
+;; Header: 0xdcdaa039
+;; TLB: only_user#dcdaa039 index:int256 = OnlyUser
+;;
+
+builder $OnlyUser$_store(builder build_0, (int) v) inline {
+    var (v'index) = v;
+    build_0 = store_uint(build_0, 3705315385, 32);
+    build_0 = build_0.store_int(v'index, 256);
+    return build_0;
+}
+
+cell $OnlyUser$_store_cell((int) v) inline {
+    return $OnlyUser$_store(begin_cell(), v).end_cell();
+}
+
+(slice, (tuple)) $OnlyUser$_load_bounced(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3705315385);
+    return (sc_0, null());
+}
+
+((int)) $OnlyUser$_constructor_index(int $index) inline {
+    return ($index);
 }
 
 ;;

@@ -18,6 +18,9 @@ PROGRAM{
   DECLPROC $Deploy$_load
   DECLPROC $DeployOk$_store
   DECLPROC $DeployOk$_store_cell
+  DECLPROC $OnlyUser$_store
+  DECLPROC $OnlyUser$_store_cell
+  DECLPROC $OnlyUser$_load_bounced
   DECLPROC $UserParent$_store
   DECLPROC $UserParent$_load
   DECLPROC $StateInit$_not_null
@@ -35,11 +38,12 @@ PROGRAM{
   DECLPROC $UserParent$_fun_owner
   DECLPROC $UserChild$_init_child
   DECLPROC $SendParameters$_constructor_to_body_value_mode
-  DECLPROC $SendParameters$_constructor_to_value_mode_bounce
+  DECLPROC $OnlyUser$_constructor_index
   DECLPROC $SendParameters$_constructor_to_body_value_mode_code_data_bounce
+  DECLPROC $SendParameters$_constructor_to_value_mode_bounce
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $UserParent$_internal_text_1160d325c31548a86dfb384105a03edafbe2043fd3d5a5cc0bbe62ce39a21372
-  DECLPROC $UserParent$_receive_bounce
+  DECLPROC $UserParent$_receive_binary_bounce_OnlyUser
   DECLPROC $UserParent$_internal_text_a8c6d5975efd68b12df2f7ef515fdcdf07092c575e49d8edf1d10d0f38fe6047
   DECLPROC $UserParent$_internal_binary_Deploy
   103528 DECLMETHOD %getCount
@@ -185,6 +189,26 @@ PROGRAM{
     SWAP
     $DeployOk$_store INLINECALLDICT
     ENDC
+  }>
+  $OnlyUser$_store PROCINLINE:<{
+    3705315385 PUSHINT
+    ROT
+    32 STU
+    256 STI
+  }>
+  $OnlyUser$_store_cell PROCINLINE:<{
+    NEWC
+    SWAP
+    $OnlyUser$_store INLINECALLDICT
+    ENDC
+  }>
+  $OnlyUser$_load_bounced PROCINLINE:<{
+    32 LDU
+    SWAP
+    3705315385 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    PUSHNULL
   }>
   $UserParent$_store PROCINLINE:<{
     2SWAP
@@ -433,15 +457,17 @@ PROGRAM{
     PUSHNULL
     PUSHNULL
   }>
+  $OnlyUser$_constructor_index PROCINLINE:<{
+  }>
+  $SendParameters$_constructor_to_body_value_mode_code_data_bounce PROCINLINE:<{
+    s0 s6 XCHG
+    s5 s5 s5 XCHG3
+  }>
   $SendParameters$_constructor_to_value_mode_bounce PROCINLINE:<{
     3 -ROLL
     PUSHNULL
     PUSHNULL
     PUSHNULL
-  }>
-  $SendParameters$_constructor_to_body_value_mode_code_data_bounce PROCINLINE:<{
-    s0 s6 XCHG
-    s5 s5 s5 XCHG3
   }>
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
@@ -457,23 +483,17 @@ PROGRAM{
     s3 s4 XCHG
     SWAP
     __tact_dict_set_slice_slice INLINECALLDICT
-    NEWC
-    ENDC
+    0 PUSHINT
+    $OnlyUser$_constructor_index INLINECALLDICT
+    $OnlyUser$_store_cell INLINECALLDICT
     s1 s2 XCHG
     20000000 PUSHINT
     2 PUSHINT
     $SendParameters$_constructor_to_body_value_mode INLINECALLDICT
     $global_send INLINECALLDICT
     DROP
-    __tact_context_get_sender INLINECALLDICT
-    0 PUSHINT
-    66 PUSHINT
-    FALSE
-    $SendParameters$_constructor_to_value_mode_bounce INLINECALLDICT
-    $global_send INLINECALLDICT
-    DROP
   }>
-  $UserParent$_receive_bounce PROCINLINE:<{
+  $UserParent$_receive_binary_bounce_OnlyUser PROCINLINE:<{
     DROP
     SWAP
     INC
@@ -554,7 +574,24 @@ PROGRAM{
     IFJMP:<{
       32 PUSHINT
       SDSKIPFIRST
-      $UserParent$_receive_bounce INLINECALLDICT
+      0 PUSHINT
+      OVER
+      SBITS
+      31 GTINT
+      IF:<{
+        DROP
+        DUP
+        32 PLDU
+      }>
+      3705315385 PUSHINT
+      EQUAL
+      IFJMP:<{
+        $OnlyUser$_load_bounced INLINECALLDICT
+        NIP
+        $UserParent$_receive_binary_bounce_OnlyUser INLINECALLDICT
+        TRUE
+      }>
+      DROP
       TRUE
     }>
     0 PUSHINT

@@ -10,7 +10,9 @@ import "@stdlib/ownable";
 
 // send()会将控制流发出，若目标消息内没有send操作，控制流则会返回，否则会将控制权转交给目标消息
 // self.reply()会将控制流返回给调用者，
-
+message OnlyUser{
+    index: Int as int256;
+}
 
 contract UserParent with Deployable, Ownable  {
 
@@ -33,14 +35,14 @@ contract UserParent with Deployable, Ownable  {
         // let ctx: Context = context();
         let toAddress = contractAddress(initOf UserChild(myAddress(), sender()));
         self.userMap.set(toAddress, sender());
+
+
         send(SendParameters{ // this will forward excess gas
             to: toAddress,
-            body:beginCell().endCell(),
+            body:OnlyUser{index: 0}.toCell(),
             value: ton("0.02"), 
             mode: SendIgnoreErrors
         });
-
-       
 
         // 返回剩余gas
         // send(SendParameters{
@@ -52,12 +54,10 @@ contract UserParent with Deployable, Ownable  {
         // self.reply(NewTodoResponse{seqno: self.numTodos}.toCell()); // this will return excess gas to sender
     }
 
-    // bounced(msg: bounced<AddMsg>){
-    bounced(rawMsg: Slice){
+    // bounced(rawMsg: Slice){ // 监听所有的bounced 回退消息
+    bounced(onlyUser: bounced<OnlyUser>){ // 只监听OnlyUser消息,测试回退消息数值
         self.count = self.count + 1;
-        
         let firstUser = self.userMap.get(sender());
-
         let init: StateInit = initOf UserChild(myAddress(), firstUser!!);
 
          // 每1000次，清空一次userMap

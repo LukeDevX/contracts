@@ -570,6 +570,53 @@ function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
     }
 }
 
+export type OnlyUser = {
+    $$type: 'OnlyUser';
+    index: bigint;
+}
+
+export function storeOnlyUser(src: OnlyUser) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(3705315385, 32);
+        b_0.storeInt(src.index, 256);
+    };
+}
+
+export function loadOnlyUser(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 3705315385) { throw Error('Invalid prefix'); }
+    let _index = sc_0.loadIntBig(256);
+    return { $$type: 'OnlyUser' as const, index: _index };
+}
+
+function loadTupleOnlyUser(source: TupleReader) {
+    let _index = source.readBigNumber();
+    return { $$type: 'OnlyUser' as const, index: _index };
+}
+
+function loadGetterTupleOnlyUser(source: TupleReader) {
+    let _index = source.readBigNumber();
+    return { $$type: 'OnlyUser' as const, index: _index };
+}
+
+function storeTupleOnlyUser(source: OnlyUser) {
+    let builder = new TupleBuilder();
+    builder.writeNumber(source.index);
+    return builder.build();
+}
+
+function dictValueParserOnlyUser(): DictionaryValue<OnlyUser> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeOnlyUser(src)).endCell());
+        },
+        parse: (src) => {
+            return loadOnlyUser(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type UserParent$Data = {
     $$type: 'UserParent$Data';
     owner: Address;
@@ -691,8 +738,8 @@ function initUserParent_init_args(src: UserParent_init_args) {
 }
 
 async function UserParent_init(owner: Address) {
-    const __code = Cell.fromBase64('te6ccgECFQEABAsAART/APSkE/S88sgLAQIBYgIDAt7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBaINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEsv/9ADJ7VQSBAIBIA0OBM7tou37AY9GgCDXITABpIEBC/hCI1lZ9ApvoZIwbd/4Q/goAiBu8tCAEts8Iqk4AMAAlTJtM3AC3vhCyMlaggkSqIByWnAGRVXbPDABf+BwIddJwh+VMCDXCx/eIIIQlGqYtrrjAsAACQsFBgFQMNMfAYIQlGqYtrry4IHTPwExyAGCEK/5D1dYyx/LP8n4QgFwbds8fwcC+I92+QEggvARYNMlwxVIqG37OEEFoD7a++IEP9PVpcwLvmLOOaITcrqOhjDbPH/bMeCC8KjG1Zde/WixLfL371Ff3N8HCSxXXknY7fHRDQ84/mBHuo6h+EFvJBAjXwOBOMZTQccF8vRwgQCCcFUgbW1t2zwwf9sx4JEw4nAICwE8bW0ibrOZWyBu8tCAbyIBkTLiECRwAwSAQlAj2zwwCwP2+EP4KPhC2zxwWchwAcsBcwHLAXABywASzMzJ+QDIcgHLAXABywASygfL/8nQINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiIEBC/hCIhA0ASBulTBZ9FkwmMgBzxZBM/RB4sjJEoIJMS0Acn8EA21t2zww+EJwgEJwCQsKANYC0PQEMG0BgUPHAYAQ9A9vofLghwGBQ8ciAoAQ9BfIAcj0AMkBzHABygBAA1kg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxYBINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WyQEQVSBtbW3bPDALAcrIcQHKAVAHAcoAcAHKAlAFINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WUAP6AnABymgjbrORf5MkbrPilzMzAXABygDjDSFus5x/AcoAASBu8tCAAcyVMXABygDiyQH7CAwAmH8BygDIcAHKAHABygAkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDiJG6znX8BygAEIG7y0IBQBMyWNANwAcoA4nABygACfwHKAALJWMwCEb4o7tnm2eNhjBIPAgEgEBEAAiICEblGjbPNs8bDGBITABG4K+7UTQ0gABgBxu1E0NQB+GPSAAGOKPpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0//0BFUgbBPg+CjXCwqDCbry4In6QAEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIAdHbPBQAAiEABHBt');
-    const __system = Cell.fromBase64('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');
+    const __code = Cell.fromBase64('te6ccgECFQEABDEAART/APSkE/S88sgLAQIBYgIDAt7QAdDTAwFxsKMB+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiFRQUwNvBPhhAvhi2zxVEts88uCCyPhDAcx/AcoAVSBaINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiM8WEsv/9ADJ7VQSBAIBIA0OA/Ttou37AY9ugCDXIXAh10nCH5UwINcLH96CENzaoDm6j1HTHwGCENzaoDm68uCBbTEwAaSBAQv4QiNZWfQKb6GSMG3f+EP4KAIgbvLQgBLbPCKpOADAAJUybTNwAt74QsjJWoIJEqiAclpwBkVV2zwwAX/gMH/gcCHXSQkLBQKGwh+VMCDXCx/eIIIQlGqYtrqOqDDTHwGCEJRqmLa68uCB0z8BMcgBghCv+Q9XWMsfyz/J+EIBcG3bPH/gwACRMOMNcAYHATxtbSJus5lbIG7y0IBvIgGRMuIQJHADBIBCUCPbPDALAuz5ASCC8BFg0yXDFUiobfs4QQWgPtr74gQ/09WlzAu+Ys45ohNyuo6GMNs8f9sx4ILwqMbVl179aLEt8vfvUV/c3wcJLFdeSdjt8dENDzj+YEe6jqH4QW8kECNfA4E4xlNBxwXy9HCBAIJwVSBtbW3bPDB/2zHgCAsC9PhD+Cj4Qts8cFnIcAHLAXMBywFwAcsAEszMyfkAyHIBywFwAcsAEsoHy//J0CDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IiBAQv4QiIQNAEgbpUwWfRZMJjIAc8WQTP0QeJwyAGCENzaoDlYyx/K/8kSggkxLQByCQoA1gLQ9AQwbQGBQ8cBgBD0D2+h8uCHAYFDxyICgBD0F8gByPQAyQHMcAHKAEADWSDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IjPFgEg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxbJARB/BANtbds8MAsByshxAcoBUAcBygBwAcoCUAUg10mBAQu68uCIINcLCiCBBP+68tCJgwm68uCIzxZQA/oCcAHKaCNus5F/kyRus+KXMzMBcAHKAOMNIW6znH8BygABIG7y0IABzJUxcAHKAOLJAfsIDACYfwHKAMhwAcoAcAHKACRus51/AcoABCBu8tCAUATMljQDcAHKAOIkbrOdfwHKAAQgbvLQgFAEzJY0A3ABygDicAHKAAJ/AcoAAslYzAIRviju2ebZ42GMEg8CASAQEQACIgIRuUaNs82zxsMYEhMAEbgr7tRNDSAAGAHG7UTQ1AH4Y9IAAY4o+kABINdJgQELuvLgiCDXCwoggQT/uvLQiYMJuvLgiAHT//QEVSBsE+D4KNcLCoMJuvLgifpAASDXSYEBC7ry4Igg1wsKIIEE/7ry0ImDCbry4IgB0ds8FAACIQAEcG0=');
+    const __system = Cell.fromBase64('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');
     let builder = beginCell();
     builder.storeRef(__system);
     builder.storeUint(0, 1);
@@ -752,6 +799,7 @@ const UserParent_types: ABIType[] = [
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"OnlyUser","header":3705315385,"fields":[{"name":"index","type":{"kind":"simple","type":"int","optional":false,"format":256}}]},
     {"name":"UserParent$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"count","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"userMap","type":{"kind":"dict","key":"address","value":"address"}}]},
     {"name":"UserChild$Data","header":null,"fields":[{"name":"parent","type":{"kind":"simple","type":"address","optional":false}},{"name":"userAddress","type":{"kind":"simple","type":"address","optional":false}}]},
 ]

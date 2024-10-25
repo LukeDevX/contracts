@@ -570,6 +570,53 @@ function dictValueParserChangeOwnerOk(): DictionaryValue<ChangeOwnerOk> {
     }
 }
 
+export type OnlyUser = {
+    $$type: 'OnlyUser';
+    index: bigint;
+}
+
+export function storeOnlyUser(src: OnlyUser) {
+    return (builder: Builder) => {
+        let b_0 = builder;
+        b_0.storeUint(3705315385, 32);
+        b_0.storeInt(src.index, 256);
+    };
+}
+
+export function loadOnlyUser(slice: Slice) {
+    let sc_0 = slice;
+    if (sc_0.loadUint(32) !== 3705315385) { throw Error('Invalid prefix'); }
+    let _index = sc_0.loadIntBig(256);
+    return { $$type: 'OnlyUser' as const, index: _index };
+}
+
+function loadTupleOnlyUser(source: TupleReader) {
+    let _index = source.readBigNumber();
+    return { $$type: 'OnlyUser' as const, index: _index };
+}
+
+function loadGetterTupleOnlyUser(source: TupleReader) {
+    let _index = source.readBigNumber();
+    return { $$type: 'OnlyUser' as const, index: _index };
+}
+
+function storeTupleOnlyUser(source: OnlyUser) {
+    let builder = new TupleBuilder();
+    builder.writeNumber(source.index);
+    return builder.build();
+}
+
+function dictValueParserOnlyUser(): DictionaryValue<OnlyUser> {
+    return {
+        serialize: (src, builder) => {
+            builder.storeRef(beginCell().store(storeOnlyUser(src)).endCell());
+        },
+        parse: (src) => {
+            return loadOnlyUser(src.loadRef().beginParse());
+        }
+    }
+}
+
 export type UserParent$Data = {
     $$type: 'UserParent$Data';
     owner: Address;
@@ -754,6 +801,7 @@ const UserChild_types: ABIType[] = [
     {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
     {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"OnlyUser","header":3705315385,"fields":[{"name":"index","type":{"kind":"simple","type":"int","optional":false,"format":256}}]},
     {"name":"UserParent$Data","header":null,"fields":[{"name":"owner","type":{"kind":"simple","type":"address","optional":false}},{"name":"count","type":{"kind":"simple","type":"uint","optional":false,"format":256}},{"name":"userMap","type":{"kind":"dict","key":"address","value":"address"}}]},
     {"name":"UserChild$Data","header":null,"fields":[{"name":"parent","type":{"kind":"simple","type":"address","optional":false}},{"name":"userAddress","type":{"kind":"simple","type":"address","optional":false}}]},
 ]

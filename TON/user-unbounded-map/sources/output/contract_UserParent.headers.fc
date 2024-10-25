@@ -54,6 +54,15 @@ builder $DeployOk$_store(builder build_0, (int) v) inline;
 ;; $DeployOk$_store_cell
 cell $DeployOk$_store_cell((int) v) inline;
 
+;; $OnlyUser$_store
+builder $OnlyUser$_store(builder build_0, (int) v) inline;
+
+;; $OnlyUser$_store_cell
+cell $OnlyUser$_store_cell((int) v) inline;
+
+;; $OnlyUser$_load_bounced
+(slice, (tuple)) $OnlyUser$_load_bounced(slice sc_0) inline;
+
 ;; $UserParent$_store
 builder $UserParent$_store(builder build_0, (slice, int, cell) v) inline;
 
@@ -105,11 +114,14 @@ int $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline
 ;; $SendParameters$_constructor_to_body_value_mode
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode(slice $to, cell $body, int $value, int $mode) inline;
 
-;; $SendParameters$_constructor_to_value_mode_bounce
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_bounce(slice $to, int $value, int $mode, int $bounce) inline;
+;; $OnlyUser$_constructor_index
+((int)) $OnlyUser$_constructor_index(int $index) inline;
 
 ;; $SendParameters$_constructor_to_body_value_mode_code_data_bounce
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_body_value_mode_code_data_bounce(slice $to, cell $body, int $value, int $mode, cell $code, cell $data, int $bounce) inline;
+
+;; $SendParameters$_constructor_to_value_mode_bounce
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_value_mode_bounce(slice $to, int $value, int $mode, int $bounce) inline;
 
 ;; $DeployOk$_constructor_queryId
 ((int)) $DeployOk$_constructor_queryId(int $queryId) inline;

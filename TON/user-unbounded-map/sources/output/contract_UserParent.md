@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: UserParent
-BOC Size: 1047 bytes
+BOC Size: 1085 bytes
 
 # Types
-Total Types: 12
+Total Types: 13
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -44,6 +44,10 @@ Signature: `ChangeOwner{queryId:uint64,newOwner:address}`
 ## ChangeOwnerOk
 TLB: `change_owner_ok#327b2b4a queryId:uint64 newOwner:address = ChangeOwnerOk`
 Signature: `ChangeOwnerOk{queryId:uint64,newOwner:address}`
+
+## OnlyUser
+TLB: `only_user#dcdaa039 index:int256 = OnlyUser`
+Signature: `OnlyUser{index:int256}`
 
 ## UserParent$Data
 TLB: `null`

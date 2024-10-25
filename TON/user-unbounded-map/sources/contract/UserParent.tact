@@ -39,7 +39,7 @@ contract UserParent with Deployable, Ownable  {
 
         send(SendParameters{ // this will forward excess gas
             to: toAddress,
-            body:OnlyUser{index: 0}.toCell(),
+            body:OnlyUser{index: 0}.toCell(), //beginCell().endCell(), 传递空消息
             value: ton("0.02"), 
             mode: SendIgnoreErrors
         });

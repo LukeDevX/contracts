@@ -27,7 +27,7 @@ import { createNftCollectionContent, NftContent } from "../utils/utils";
     let deployer_wallet_contract = client4.open(deployer_wallet);
     let init = await ServiceNftMinter.init(deployer_wallet_contract.address);
     let contactAddress = contractAddress(workchain, init);
-    // let deployAmount = toNano("0.1"); // 部署
+    // let deployAmount = toNano("0.2"); // 部署
     let deployAmount = toNano("0.03"); // mint init
     // let deployAmount = toNano("0.16"); // mint
     let seqno: number = await deployer_wallet_contract.getSeqno();

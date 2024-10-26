@@ -3,7 +3,7 @@
   "scripts": {
     "build": "tact --config ./tact.config.json",
     "test": "jest",
-    "deploy": "ts-node ./sources/contract.deployServiceNftMinter.ts",
+    "deploy": "ts-node ./sources/scripts/contract.deployServiceNftMinter.ts",
     "api_deploy": "ts-node ./sources/contract.deploy_api.ts",
     "read": "ts-node ./sources/contract.read.ts"
   },

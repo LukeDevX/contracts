@@ -3,8 +3,8 @@ import { mnemonicToPrivateKey } from "ton-crypto";
 // @ts-ignore
 import { Minter } from "../build/Minter/tact_Minter.ts";
 import { Cell } from '@ton/core';
-import { ServiceNftMinter, storeCreateNftCollection, storeMintIdentity } from "./output/sample_ServiceNftMinter";
-import { createNftCollectionContent, NftContent } from "./utils/utils";
+import { ServiceNftMinter, storeCreateNftCollection, storeMintIdentity } from "../output/sample_ServiceNftMinter";
+import { createNftCollectionContent, NftContent } from "../utils/utils";
 // import { loadExcesses, storeExcesses } from "./output/sample_NftItem";
 
 

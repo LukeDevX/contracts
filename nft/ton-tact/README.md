@@ -8,6 +8,11 @@
 
 
 
+控制一个用户只能 mint 身份一次
+
+
+
+
 <a href="https://star-history.com/#Ton-Dynasty/tondynasty-contracts&Date">
 
   <picture>

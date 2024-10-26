@@ -8,7 +8,17 @@
 
 
 
-控制一个用户只能 mint 身份一次
+控制一个用户只能 mint 身份一次。
+
+
+核心：父子合约
+  子合约地址由，父合约和用户wallet地址算出
+  子合约存储：parent 和 用户wallet地址
+
+logan实现：子合约存储是否初始化，第一次初始化时，将mint信息传递给conllection
+luke实现：
+   在collection合约中，请求子合约，子合约若失败利用 bounced 创建子合约并 mint身份
+   因为bounced 无法获取最初sender(),需要使用map提前存储 
 
 
 

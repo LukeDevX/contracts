@@ -39,7 +39,7 @@ contract UserParent with Deployable, Ownable  {
 
         send(SendParameters{ // this will forward excess gas
             to: toAddress,
-            body:OnlyUser{index: 0}.toCell(), //beginCell().endCell(), 传递空消息
+            body:OnlyUser{index: 20}.toCell(), //beginCell().endCell(), 传递空消息
             value: ton("0.02"), 
             mode: SendIgnoreErrors
         });
@@ -56,15 +56,17 @@ contract UserParent with Deployable, Ownable  {
 
     // bounced(rawMsg: Slice){ // 监听所有的bounced 回退消息
     bounced(onlyUser: bounced<OnlyUser>){ // 只监听OnlyUser消息,测试回退消息数值
-        self.count = self.count + 1;
+        // self.count = self.count + 1;
         let firstUser = self.userMap.get(sender());
         let init: StateInit = initOf UserChild(myAddress(), firstUser!!);
 
+// let user: OnlyUser = onlyUser.unwrap(); // 解包
+        self.count = onlyUser.value.index;
+        println!("Received onlyUser: {:?}", onlyUser);
          // 每1000次，清空一次userMap
-        if(self.count % 2 == 0 ){
-            self.userMap= emptyMap();
-            self.count = 0;
-        }
+        // if(self.count % 2 == 0 ){
+        //     self.userMap= emptyMap();
+        // }
         // 不能返回任何消息，一返回就报130，参数错误
     // https://testnet.tonviewer.com/transaction/9b13a6b75ee3fba2a58cf325b5c961500874853f9d3e0d474783781efed0df05
         send(SendParameters{    
